@@ -1,0 +1,110 @@
+Flight Details:
+UK Airport: MAN
+Overseas Airport: JFK
+Aircraft Type: Large narrow body
+Distance: 5376 km
+Total Revenue: £75636
+Total Cost: £NaN
+Profit or Loss: £NaN
+
+========================================
+
+Flight Details:
+UK Airport: LGW
+Overseas Airport: ORY
+Aircraft Type: Medium narrow body
+Distance: 325 km
+Total Revenue: £21600
+Total Cost: £NaN
+Profit or Loss: £NaN
+
+========================================
+
+Flight Details:
+UK Airport: MAN
+Overseas Airport: MAD
+Aircraft Type: Medium wide body
+Distance: 1435 km
+Total Revenue: £58400
+Total Cost: £NaN
+Profit or Loss: £NaN
+
+========================================
+
+Flight Details:
+UK Airport: LGW
+Overseas Airport: AMS
+Aircraft Type: Medium narrow body
+Distance: 363 km
+Total Revenue: £14400
+Total Cost: £NaN
+Profit or Loss: £NaN
+
+========================================
+
+Flight Details:
+UK Airport: MAN
+Overseas Airport: CAI
+Aircraft Type: Large narrow body
+Distance: 3740 km
+Total Revenue: £97800
+Total Cost: £NaN
+Profit or Loss: £NaN
+
+========================================
+
+Flight Details:
+UK Airport: LGW
+Overseas Airport: JFK
+Aircraft Type: Medium wide body
+Distance: 5583 km
+Total Revenue: £84400
+Total Cost: £NaN
+Profit or Loss: £NaN
+
+========================================
+
+Flight Details:
+UK Airport: MAN
+Overseas Airport: ORY
+Aircraft Type: Medium narrow body
+Distance: 610 km
+Total Revenue: £17240
+Total Cost: £NaN
+Profit or Loss: £NaN
+
+========================================
+
+Flight Details:
+UK Airport: LGW
+Overseas Airport: MAD
+Aircraft Type: Large narrow body
+Distance: 1216 km
+Total Revenue: £66150
+Total Cost: £NaN
+Profit or Loss: £NaN
+
+========================================
+
+Flight Details:
+UK Airport: MAN
+Overseas Airport: AMS
+Aircraft Type: Medium narrow body
+Distance: 485 km
+Total Revenue: £11650
+Total Cost: £NaN
+Profit or Loss: £NaN
+
+========================================
+
+Flight Details:
+UK Airport: LGW
+Overseas Airport: CAI
+Aircraft Type: Medium wide body
+Distance: 3494 km
+Total Revenue: £114400
+Total Cost: £NaN
+Profit or Loss: £NaN
+
+========================================
+
