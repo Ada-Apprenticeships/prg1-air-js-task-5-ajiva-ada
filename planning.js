@@ -39,16 +39,19 @@ function readCsv(filename, delimiter = ',') {
 
 
 //to load data into arrays 
-function loadCSV(filepath,array) {
+async function loadCSV(filepath, array) {
     return new Promise((resolve, reject) => {
-        // pipe strea, into the parser 
         fs.createReadStream(filepath)
-        .pipe(csv())
-        .on('data', (row) => array.push(row))
-        .on('end', () => resolve()) //resolve promise when read is finished
-        .on('error', reject); 
+            .pipe(csv())
+            .on('data', (row) => {
+                //console.log("Loaded row:", row); // checkign for debugging  => information is correct here 
+                array.push(row);
+            })
+            .on('end', () => resolve())
+            .on('error', reject);
     });
 }
+
 
 //distance between uk and overseas airport
 function getDistance(ukAirport, overseasAirport) {
@@ -59,6 +62,7 @@ function getDistance(ukAirport, overseasAirport) {
 //information on the aeroplane
 function getAircraftInfo(aircraftType) {
     return aeroplanes.find(aircraft => aircraft.type === aircraftType);
+    
 }
 
 function calculateProfit(flight) {
@@ -76,26 +80,32 @@ function calculateProfit(flight) {
         ? parseFloat(aircraft.runningcostperseatper100km.replace('£', '').replace(',', ''))
         : 0;  // if data is missing 
 // for debugging to check all prices (some are 0)
-    console.log(`cost per seat per 100km: £${costPerSeatPer100km}`);
+    //console.log(`cost per seat per 100km: £${costPerSeatPer100km}`);
 
-    const totalSeats = (parseInt(aircraft.economyseats, 10) || 0) + 
-                       (parseInt(aircraft.businessseats, 10) || 0) + 
-                       (parseInt(aircraft.firstclassseats, 10) || 0); 
+    const economySeats = (parseInt(aircraft.economyseats, 10) || 0);
+    const businessSeats = (parseInt(aircraft.businessseats, 10) || 0); 
+    const firstClassSeats = (parseInt(aircraft.firstclassseats, 10) || 0); 
+
+    const totalSeats = economySeats + businessSeats + firstClassSeats;
+//debugging 
+    // console.log(`Economy Seats: ${economySeats}, Business Seats: ${businessSeats}, First Class Seats: ${firstClassSeats}, Total Seats: ${totalSeats}`);
+    // for debugging, total seats adds up to 0 for some reason 
+    // console.log(`${totalSeats}`);
 
     //revenue calculations 
     const revenueEconomy = (parseInt(flight['Number of economy seats booked'], 10) || 0) * 
-                            (parseInt(flight['Price of a economy class seat'], 10) || 0); 
+                            (Math.max(parseInt(flight['Price of a economy class seat'], 10) || 0)); 
     const revenueBusiness = (parseInt(flight['Number of business seats booked'], 10) || 0) * 
-                            (parseInt(flight['Price of a business class seat'], 10) || 0); 
+                            (Math.max(parseInt(flight['Price of a business class seat'], 10) || 0)); 
     const revenueFirst = (parseInt(flight['Number of first class seats booked'], 10) || 0) * 
-                         (parseInt(flight['Price of a first class seat'], 10) || 0); 
+                         (Math.max(parseInt(flight['Price of a first class seat'], 10) || 0)); 
     const totalRevenue = revenueEconomy + revenueBusiness + revenueFirst;
 // checking the values for debugging because cost keeps coming up as 0 
-    console.log(`distance: ${distance}, cost per seat per 100 km: £${costPerSeatPer100km}, total seats: ${totalSeats}`);
+   // console.log(`distance: ${distance}, cost per seat per 100 km: £${costPerSeatPer100km}, total seats: ${totalSeats}`);
     
     const totalCost = (distance / 100) * costPerSeatPer100km * totalSeats;
 
-    console.log(`total cost alculations: distance = ${distance}, total seats = ${totalSeats}, total cost = £${totalCost}`);
+   // console.log(`total cost alculations: distance = ${distance}, total seats = ${totalSeats}, total cost = £${totalCost}`);
 
     //calculate for a profit or loss 
     const profitOrLossAmount = totalRevenue - totalCost;
@@ -117,7 +127,7 @@ async function generateReport() {
         fs.unlinkSync(outputFilePath);//delete existing file 
     }
     try {
-        await loadCSV('airports.csv', airports);
+        await loadCSV('airports.csv', airports); //pause until promise is solved 
         await loadCSV('aeroplanes.csv', aeroplanes);
         await loadCSV('valid_flight_data.csv', flights);
         
