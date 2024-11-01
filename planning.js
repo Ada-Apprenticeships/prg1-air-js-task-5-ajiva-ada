@@ -73,28 +73,40 @@ function calculateProfit(flight) {
     }
 
     const costPerSeatPer100km = aircraft.runningcostperseatper100km
-        ? parseFloat(aircraft.runningcostperseatper100km.replace('£', ''))
-        : 0;  // Default to 0 if data is missing
+        ? parseFloat(aircraft.runningcostperseatper100km.replace('£', '').replace(',', ''))
+        : 0;  // if data is missing 
+// for debugging to check all prices (some are 0)
+    console.log(`cost per seat per 100km: £${costPerSeatPer100km}`);
 
-    const totalSeats = parseInt(aircraft.economyseats, 10) + parseInt(aircraft.businessseats, 10) + parseInt(aircraft.firstclassseats, 10);
+    const totalSeats = (parseInt(aircraft.economyseats, 10) || 0) + 
+                       (parseInt(aircraft.businessseats, 10) || 0) + 
+                       (parseInt(aircraft.firstclassseats, 10) || 0); 
 
-    // calulate revenue 
-    const revenueEconomy = parseInt(flight['Number of economy seats booked'], 10) * parseInt(flight['Price of a economy class seat'], 10);
-    const revenueBusiness = parseInt(flight['Number of business seats booked'], 10) * parseInt(flight['Price of a business class seat'], 10);
-    const revenueFirst = parseInt(flight['Number of first class seats booked'], 10) * parseInt(flight['Price of a first class seat'], 10);
+    //revenue calculations 
+    const revenueEconomy = (parseInt(flight['Number of economy seats booked'], 10) || 0) * 
+                            (parseInt(flight['Price of a economy class seat'], 10) || 0); 
+    const revenueBusiness = (parseInt(flight['Number of business seats booked'], 10) || 0) * 
+                            (parseInt(flight['Price of a business class seat'], 10) || 0); 
+    const revenueFirst = (parseInt(flight['Number of first class seats booked'], 10) || 0) * 
+                         (parseInt(flight['Price of a first class seat'], 10) || 0); 
     const totalRevenue = revenueEconomy + revenueBusiness + revenueFirst;
-
+// checking the values for debugging because cost keeps coming up as 0 
+    console.log(`distance: ${distance}, cost per seat per 100 km: £${costPerSeatPer100km}, total seats: ${totalSeats}`);
+    
     const totalCost = (distance / 100) * costPerSeatPer100km * totalSeats;
 
+    console.log(`total cost alculations: distance = ${distance}, total seats = ${totalSeats}, total cost = £${totalCost}`);
+
     //calculate for a profit or loss 
-    const profitOrLoss = totalRevenue - totalCost;
+    const profitOrLossAmount = totalRevenue - totalCost;
+    
 
     return {
         flightDetails: flight,
         distance,
         totalRevenue,
         totalCost,
-        profitOrLoss
+        profitOrLoss: profitOrLossAmount
     };
 }
 
